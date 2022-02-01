@@ -1,0 +1,5 @@
+rootProject.name = 'annotation-processor-tutorial'
+include 'annotations'
+include 'processors'
+include 'consumer'
+

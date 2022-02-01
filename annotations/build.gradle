@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'tutorial.annotation'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+configurations {
+    compileOnly.canBeResolved true
+}
+
+task annotationJar(type: Jar) {
+    baseName 'annotations'
+    version project.version
+    destinationDir(file("../libs"))
+    manifest {
+        attributes 'Implementation-Title': 'collection of annotations',
+                'Implementation-Version': project.version
+    }
+    from {
+        configurations.compileOnly.collect {
+            () -> it.isDirectory() ? it : zipTree(it)
+        }
+    } with jar
+}
